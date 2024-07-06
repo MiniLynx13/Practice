@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  flask_app:
+    build: .
+    ports:
+      - '5000:5000'
+    volumes:
+      - './:/app'
+    depends_on:
+      - db
+    enviroment:
+      FLASK_APP: app.py
+      FLASK_DEBUG: 1
+
+  db:
+    image: postgres:16
+    restart: always
+    container_name: db
+    ports:
+      - 5432:5432
+    enviroment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: MiniLynx
+      POSTGRES_DB: vocations
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - '.:/var/lib/postgresql/data'
+  
+    
